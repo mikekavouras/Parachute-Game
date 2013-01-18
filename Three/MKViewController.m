@@ -138,16 +138,16 @@
     [self accelerometerMoved:motion_.accelerometerData];
   }
   parachute.center = CGPointMake(parachute.center.x + speed.x, parachute.center.y + speed.y);
-  CGAffineTransform xform = CGAffineTransformMakeRotation(rotation);
-  NSLog(@"%f", rotation
-        );
+  
   BOOL parachuteDidHitSide = parachute.center.x + parachute.frame.size.width / 2 >= _mainView.bounds.size.width || parachute.center.x - parachute.frame.size.width / 2 < 0;
   
   if (parachuteDidHitSide) {
     _mainView.parachuteSpeed = CGPointMake(-speed.x, speed.y);
+  } else {
+    CGAffineTransform xform = CGAffineTransformMakeRotation(rotation);
+    parachute.transform = xform;
   }
   
-  parachute.transform = xform;
   BOOL parachuteDidHitBar = CGRectIntersectsRect(parachute.frame, bar.frame) && parachute.frame.origin.y + parachute.frame.size.height <= _mainView.bar.frame.origin.y + 10;
   
   if (parachuteDidHitBar) {
